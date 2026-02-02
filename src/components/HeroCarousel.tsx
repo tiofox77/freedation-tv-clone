@@ -1,30 +1,31 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import slide1 from "@/assets/slide-1.jpg";
-import slide2 from "@/assets/slide-2.jpg";
-import slide3 from "@/assets/slide-3.jpg";
-import slide4 from "@/assets/slide-4.jpg";
-import slide5 from "@/assets/slide-5.jpg";
+import video1 from "@/assets/video-1.mp4";
+import video2 from "@/assets/video-2.mp4";
+import video3 from "@/assets/video-3.mp4";
+import video4 from "@/assets/video-4.mp4";
+import video5 from "@/assets/video-5.mp4";
 
 interface Slide {
   id: number;
-  image: string;
+  video: string;
   category: string;
   title: string;
 }
 
 const slides: Slide[] = [
-  { id: 1, image: slide1, category: "Demo Reel", title: "1-Demo Reel" },
-  { id: 2, image: slide2, category: "Institucional", title: "2-Corporativos" },
-  { id: 3, image: slide3, category: "Publicidade", title: "3-Publicidade" },
-  { id: 4, image: slide4, category: "Demo Reel, Video Clips", title: "4-Video Clips" },
-  { id: 5, image: slide5, category: "Making Off", title: "5-Making Off" },
+  { id: 1, video: video1, category: "Demo Reel", title: "1-Demo Reel" },
+  { id: 2, video: video2, category: "Institucional", title: "2-Corporativos" },
+  { id: 3, video: video3, category: "Publicidade", title: "3-Publicidade" },
+  { id: 4, video: video4, category: "Demo Reel, Video Clips", title: "4-Video Clips" },
+  { id: 5, video: video5, category: "Making Off", title: "5-Making Off" },
 ];
 
 const HeroCarousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   const goToSlide = useCallback((index: number) => {
     if (isTransitioning) return;
@@ -43,10 +44,25 @@ const HeroCarousel = () => {
     goToSlide(prev);
   }, [currentSlide, goToSlide]);
 
+  // Auto-advance slides
   useEffect(() => {
-    const interval = setInterval(nextSlide, 6000);
+    const interval = setInterval(nextSlide, 8000);
     return () => clearInterval(interval);
   }, [nextSlide]);
+
+  // Play/pause videos based on current slide
+  useEffect(() => {
+    videoRefs.current.forEach((video, index) => {
+      if (video) {
+        if (index === currentSlide) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+          video.currentTime = 0;
+        }
+      }
+    });
+  }, [currentSlide]);
 
   const getSlidePosition = (index: number) => {
     const diff = index - currentSlide;
@@ -81,10 +97,14 @@ const HeroCarousel = () => {
               onClick={() => goToSlide(index)}
             >
               <div className="relative w-full h-full overflow-hidden rounded-lg shadow-2xl">
-                <img
-                  src={slide.image}
-                  alt={slide.title}
+                <video
+                  ref={(el) => (videoRefs.current[index] = el)}
+                  src={slide.video}
                   className="w-full h-full object-cover grayscale contrast-110"
+                  loop
+                  muted
+                  playsInline
+                  preload="auto"
                 />
                 <div className="absolute inset-0 gradient-overlay" />
               </div>
