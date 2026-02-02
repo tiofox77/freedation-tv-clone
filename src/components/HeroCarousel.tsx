@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import video1 from "@/assets/video-1.mp4";
 import video2 from "@/assets/video-2.mp4";
@@ -12,20 +13,22 @@ interface Slide {
   video: string;
   category: string;
   title: string;
+  slug: string;
 }
 
 const slides: Slide[] = [
-  { id: 1, video: video1, category: "Demo Reel", title: "1-Demo Reel" },
-  { id: 2, video: video2, category: "Institucional", title: "2-Corporativos" },
-  { id: 3, video: video3, category: "Publicidade", title: "3-Publicidade" },
-  { id: 4, video: video4, category: "Demo Reel, Video Clips", title: "4-Video Clips" },
-  { id: 5, video: video5, category: "Making Off", title: "5-Making Off" },
+  { id: 1, video: video1, category: "Demo Reel", title: "1-Demo Reel", slug: "demo-reel" },
+  { id: 2, video: video2, category: "Institucional", title: "2-Corporativos", slug: "corporativos" },
+  { id: 3, video: video3, category: "Publicidade", title: "3-Publicidade", slug: "publicidade" },
+  { id: 4, video: video4, category: "Demo Reel, Video Clips", title: "4-Video Clips", slug: "video-clips" },
+  { id: 5, video: video5, category: "Making Off", title: "5-Making Off", slug: "making-off" },
 ];
 
 const HeroCarousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const navigate = useNavigate();
 
   const goToSlide = useCallback((index: number) => {
     if (isTransitioning) return;
@@ -44,13 +47,11 @@ const HeroCarousel = () => {
     goToSlide(prev);
   }, [currentSlide, goToSlide]);
 
-  // Auto-advance slides
   useEffect(() => {
     const interval = setInterval(nextSlide, 8000);
     return () => clearInterval(interval);
   }, [nextSlide]);
 
-  // Play/pause videos based on current slide
   useEffect(() => {
     videoRefs.current.forEach((video, index) => {
       if (video) {
@@ -73,9 +74,12 @@ const HeroCarousel = () => {
     return "far-left";
   };
 
+  const handleExplore = (slug: string) => {
+    navigate(`/categoria/${slug}`);
+  };
+
   return (
     <section className="relative w-full h-screen overflow-hidden bg-background">
-      {/* Main carousel container */}
       <div className="absolute inset-0 flex items-center justify-center">
         {slides.map((slide, index) => {
           const position = getSlidePosition(index);
@@ -94,19 +98,28 @@ const HeroCarousel = () => {
                   ? "z-10 w-[20%] h-[50%] -translate-x-[280%] opacity-30"
                   : "z-10 w-[20%] h-[50%] translate-x-[280%] opacity-30"
               }`}
-              onClick={() => goToSlide(index)}
+              onClick={() => position === "center" ? handleExplore(slide.slug) : goToSlide(index)}
             >
-              <div className="relative w-full h-full overflow-hidden rounded-lg shadow-2xl">
+              <div className="relative w-full h-full overflow-hidden rounded-lg shadow-2xl group">
                 <video
                   ref={(el) => (videoRefs.current[index] = el)}
                   src={slide.video}
-                  className="w-full h-full object-cover grayscale contrast-110"
+                  className="w-full h-full object-cover grayscale contrast-110 transition-transform duration-500 group-hover:scale-105"
                   loop
                   muted
                   playsInline
                   preload="auto"
                 />
                 <div className="absolute inset-0 gradient-overlay" />
+                
+                {/* Hover overlay for center slide */}
+                {position === "center" && (
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-background/30">
+                    <span className="px-6 py-3 border-2 border-foreground text-foreground font-medium uppercase tracking-wider hover:bg-foreground hover:text-background transition-colors">
+                      Ver Projetos
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           );
@@ -154,9 +167,15 @@ const HeroCarousel = () => {
                 {slide.title}
               </span>
               {index === currentSlide && (
-                <span className="text-sm text-muted-foreground mt-2 hover:text-primary cursor-pointer transition-colors">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleExplore(slide.slug);
+                  }}
+                  className="text-sm text-muted-foreground mt-2 hover:text-primary cursor-pointer transition-colors"
+                >
                   Explore
-                </span>
+                </button>
               )}
             </button>
           ))}
