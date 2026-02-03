@@ -1,5 +1,21 @@
-// External video URLs from Freedation
+// External video URLs from Freedation with 30-second clips
+const VIDEO_CLIP_DURATION = "#t=0,30";
+
 export const videos = {
+  vivaFollowUp: `https://freedation.com/wp-content/uploads/2022/09/VIVA-SEGUROS-Malas-4K-1.mp4${VIDEO_CLIP_DURATION}`,
+  vivaSeguros: `https://freedation.com/wp-content/uploads/2022/09/VIVA-SEGUROS-Malas-4K.mp4${VIDEO_CLIP_DURATION}`,
+  elephantBet: `https://freedation.com/wp-content/uploads/2022/09/Film-Elephant-Bet-GibeleHight.mp4${VIDEO_CLIP_DURATION}`,
+  makingOffElephant: `https://freedation.com/wp-content/uploads/2022/09/MAKING-OFF-ELEPHANT-BET.mp4${VIDEO_CLIP_DURATION}`,
+  btsFraudeEmail: `https://freedation.com/wp-content/uploads/2022/09/Behind-The-Scenes-Fraude-Por-Email.mp4${VIDEO_CLIP_DURATION}`,
+  btsFraudeSms: `https://freedation.com/wp-content/uploads/2022/09/Behind-The-Scenes-Fraude-Por-Sms.mp4${VIDEO_CLIP_DURATION}`,
+  bdaSite: `https://freedation.com/wp-content/uploads/2022/09/BDA-site.mp4${VIDEO_CLIP_DURATION}`,
+  yolaSemedo: `https://freedation.com/wp-content/uploads/2022/09/yola-semedo.mp4${VIDEO_CLIP_DURATION}`,
+  baiDirecto: `https://freedation.com/wp-content/uploads/2022/09/Film-BAI-directo-Sem-Legenda.mp4${VIDEO_CLIP_DURATION}`,
+  bdaWhatsapp: `https://freedation.com/wp-content/uploads/2022/09/BDA-PUBLICIDADE-WhatsApp.mp4${VIDEO_CLIP_DURATION}`,
+};
+
+// Full videos for the custom player (when user clicks to watch)
+export const fullVideos = {
   vivaFollowUp: "https://freedation.com/wp-content/uploads/2022/09/VIVA-SEGUROS-Malas-4K-1.mp4",
   vivaSeguros: "https://freedation.com/wp-content/uploads/2022/09/VIVA-SEGUROS-Malas-4K.mp4",
   elephantBet: "https://freedation.com/wp-content/uploads/2022/09/Film-Elephant-Bet-GibeleHight.mp4",
