@@ -122,8 +122,8 @@ const HeroCarousel = () => {
                   loop
                   muted
                   playsInline
-                  preload="metadata"
-                  crossOrigin="anonymous"
+                  preload="auto"
+                  onError={(e) => console.log('Video error:', slide.video, e)}
                 />
                 <div className="absolute inset-0 gradient-overlay" />
                 
