@@ -1,4 +1,4 @@
-import { videos, thumbnails } from "./videos";
+import { videos, fullVideos, thumbnails } from "./videos";
 
 export interface Project {
   id: string;
@@ -7,7 +7,8 @@ export interface Project {
   year: string;
   description: string;
   thumbnail: string;
-  video: string;
+  video: string;        // Full video for the player
+  videoPreview: string; // 30-second clip for previews
 }
 
 export interface Category {
@@ -36,7 +37,8 @@ export const categories: Category[] = [
         year: "2024",
         description: "Compilação anual dos melhores projetos realizados pela equipe.",
         thumbnail: thumbnails.elephantBet,
-        video: videos.elephantBet,
+        video: fullVideos.elephantBet,
+        videoPreview: videos.elephantBet,
       },
       {
         id: "dr2",
@@ -45,7 +47,8 @@ export const categories: Category[] = [
         year: "2023",
         description: "Momentos marcantes das produções cinematográficas do ano.",
         thumbnail: thumbnails.baiDirecto,
-        video: videos.baiDirecto,
+        video: fullVideos.baiDirecto,
+        videoPreview: videos.baiDirecto,
       },
       {
         id: "dr3",
@@ -54,7 +57,8 @@ export const categories: Category[] = [
         year: "2023",
         description: "Seleção especial dos documentários produzidos.",
         thumbnail: thumbnails.yolaSemedo,
-        video: videos.yolaSemedo,
+        video: fullVideos.yolaSemedo,
+        videoPreview: videos.yolaSemedo,
       },
     ],
   },
@@ -73,7 +77,8 @@ export const categories: Category[] = [
         year: "2024",
         description: "Vídeo institucional apresentando os serviços digitais do banco.",
         thumbnail: thumbnails.baiDirecto,
-        video: videos.baiDirecto,
+        video: fullVideos.baiDirecto,
+        videoPreview: videos.baiDirecto,
       },
       {
         id: "corp2",
@@ -82,7 +87,8 @@ export const categories: Category[] = [
         year: "2023",
         description: "Apresentação institucional para plataforma digital.",
         thumbnail: thumbnails.bdaSite,
-        video: videos.bdaSite,
+        video: fullVideos.bdaSite,
+        videoPreview: videos.bdaSite,
       },
       {
         id: "corp3",
@@ -91,7 +97,8 @@ export const categories: Category[] = [
         year: "2024",
         description: "Vídeo corporativo para campanha de seguros de viagem.",
         thumbnail: thumbnails.vivaSeguros,
-        video: videos.vivaSeguros,
+        video: fullVideos.vivaSeguros,
+        videoPreview: videos.vivaSeguros,
       },
       {
         id: "corp4",
@@ -100,7 +107,8 @@ export const categories: Category[] = [
         year: "2024",
         description: "Continuação da campanha institucional de seguros.",
         thumbnail: thumbnails.vivaFollowUp,
-        video: videos.vivaFollowUp,
+        video: fullVideos.vivaFollowUp,
+        videoPreview: videos.vivaFollowUp,
       },
     ],
   },
@@ -119,7 +127,8 @@ export const categories: Category[] = [
         year: "2024",
         description: "Comercial digital para campanha de WhatsApp Business.",
         thumbnail: thumbnails.bdaWhatsapp,
-        video: videos.bdaWhatsapp,
+        video: fullVideos.bdaWhatsapp,
+        videoPreview: videos.bdaWhatsapp,
       },
       {
         id: "pub2",
@@ -128,7 +137,8 @@ export const categories: Category[] = [
         year: "2023",
         description: "Comercial de alta produção para casa de apostas.",
         thumbnail: thumbnails.elephantBet,
-        video: videos.elephantBet,
+        video: fullVideos.elephantBet,
+        videoPreview: videos.elephantBet,
       },
       {
         id: "pub3",
@@ -137,7 +147,8 @@ export const categories: Category[] = [
         year: "2024",
         description: "Campanha publicitária para seguros de viagem.",
         thumbnail: thumbnails.vivaSeguros,
-        video: videos.vivaSeguros,
+        video: fullVideos.vivaSeguros,
+        videoPreview: videos.vivaSeguros,
       },
     ],
   },
@@ -156,7 +167,8 @@ export const categories: Category[] = [
         year: "2024",
         description: "Produção cinematográfica para artista angolana.",
         thumbnail: thumbnails.yolaSemedo,
-        video: videos.yolaSemedo,
+        video: fullVideos.yolaSemedo,
+        videoPreview: videos.yolaSemedo,
       },
       {
         id: "vc2",
@@ -165,7 +177,8 @@ export const categories: Category[] = [
         year: "2023",
         description: "Captação de performance ao vivo em estúdio.",
         thumbnail: thumbnails.baiDirecto,
-        video: videos.baiDirecto,
+        video: fullVideos.baiDirecto,
+        videoPreview: videos.baiDirecto,
       },
     ],
   },
@@ -184,7 +197,8 @@ export const categories: Category[] = [
         year: "2024",
         description: "Bastidores da produção do comercial Elephant Bet.",
         thumbnail: thumbnails.makingOffElephant,
-        video: videos.makingOffElephant,
+        video: fullVideos.makingOffElephant,
+        videoPreview: videos.makingOffElephant,
       },
       {
         id: "mo2",
@@ -193,7 +207,8 @@ export const categories: Category[] = [
         year: "2023",
         description: "Behind the scenes da campanha de conscientização.",
         thumbnail: thumbnails.btsFraudeEmail,
-        video: videos.btsFraudeEmail,
+        video: fullVideos.btsFraudeEmail,
+        videoPreview: videos.btsFraudeEmail,
       },
       {
         id: "mo3",
@@ -202,7 +217,8 @@ export const categories: Category[] = [
         year: "2024",
         description: "Bastidores da produção sobre segurança digital.",
         thumbnail: thumbnails.btsFraudeSms,
-        video: videos.btsFraudeSms,
+        video: fullVideos.btsFraudeSms,
+        videoPreview: videos.btsFraudeSms,
       },
     ],
   },

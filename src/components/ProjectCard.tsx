@@ -45,7 +45,7 @@ const ProjectCard = ({ project, onClick }: ProjectCardProps) => {
         />
         <video
           ref={videoRef}
-          src={project.video}
+          src={project.videoPreview}
           className={`absolute inset-0 w-full h-full object-cover grayscale contrast-110 transition-all duration-700 ${
             isHovering ? "opacity-100 scale-100" : "opacity-0 scale-95"
           }`}
