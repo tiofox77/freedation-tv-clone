@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
@@ -41,11 +41,11 @@
     --gold-glow: 40 100% 65%;
     --gold-dark: 45 100% 35%;
     --cyan-accent: 185 100% 50%;
-    --dark-overlay: 220 20% 3% / 0.85;
-    --gradient-dark: linear-gradient(180deg, transparent 0%, hsl(220 20% 3%) 100%);
-    --gradient-cinematic: linear-gradient(135deg, hsl(220 20% 3%) 0%, hsl(220 25% 8%) 50%, hsl(220 20% 3%) 100%);
-    --glow-gold: 0 0 60px hsl(45 100% 50% / 0.3);
-    --glow-cyan: 0 0 40px hsl(185 100% 50% / 0.2);
+    --dark-overlay: 220 20% 3%;
+    --gradient-dark: linear-gradient(180deg, transparent 0%, hsl(220, 20%, 3%) 100%);
+    --gradient-cinematic: linear-gradient(135deg, hsl(220, 20%, 3%) 0%, hsl(220, 25%, 8%) 50%, hsl(220, 20%, 3%) 100%);
+    --glow-gold: 0 0 60px hsla(45, 100%, 50%, 0.3);
+    --glow-cyan: 0 0 40px hsla(185, 100%, 50%, 0.2);
   }
 
   .dark {
@@ -91,17 +91,17 @@
   }
 
   .text-shadow-glow {
-    text-shadow: 0 0 20px hsl(45 100% 50% / 0.5), 0 0 40px hsl(45 100% 50% / 0.3);
+    text-shadow: 0 0 20px hsla(45, 100%, 50%, 0.5), 0 0 40px hsla(45, 100%, 50%, 0.3);
   }
 
   .carousel-nav-button {
     @apply w-14 h-14 rounded-sm border border-primary/30 bg-background/50 backdrop-blur-md flex items-center justify-center text-foreground/80 transition-all duration-500;
-    box-shadow: 0 0 20px hsl(45 100% 50% / 0.1), inset 0 1px 0 hsl(45 100% 50% / 0.1);
+    box-shadow: 0 0 20px hsla(45, 100%, 50%, 0.1), inset 0 1px 0 hsla(45, 100%, 50%, 0.1);
   }
 
   .carousel-nav-button:hover {
     @apply border-primary text-primary bg-primary/10;
-    box-shadow: 0 0 30px hsl(45 100% 50% / 0.3), inset 0 1px 0 hsl(45 100% 50% / 0.2);
+    box-shadow: 0 0 30px hsla(45, 100%, 50%, 0.3), inset 0 1px 0 hsla(45, 100%, 50%, 0.2);
   }
 
   .category-item {
@@ -121,32 +121,32 @@
     background: linear-gradient(
       to bottom,
       transparent 0%,
-      hsl(220 20% 3% / 0.4) 40%,
-      hsl(220 20% 3% / 0.95) 100%
+      hsla(220, 20%, 3%, 0.4) 40%,
+      hsla(220, 20%, 3%, 0.95) 100%
     );
   }
 
   .gradient-cinematic {
     background: linear-gradient(
       135deg,
-      hsl(220 20% 3%) 0%,
-      hsl(220 25% 8%) 25%,
-      hsl(220 20% 5%) 50%,
-      hsl(220 25% 8%) 75%,
-      hsl(220 20% 3%) 100%
+      hsl(220, 20%, 3%) 0%,
+      hsl(220, 25%, 8%) 25%,
+      hsl(220, 20%, 5%) 50%,
+      hsl(220, 25%, 8%) 75%,
+      hsl(220, 20%, 3%) 100%
     );
   }
 
   .glow-border {
-    box-shadow: 0 0 20px hsl(45 100% 50% / 0.15), inset 0 1px 0 hsl(45 100% 50% / 0.1);
+    box-shadow: 0 0 20px hsla(45, 100%, 50%, 0.15), inset 0 1px 0 hsla(45, 100%, 50%, 0.1);
   }
 
   .futuristic-card {
     @apply bg-card/80 backdrop-blur-xl border border-border/50 rounded-sm;
     box-shadow: 
-      0 0 0 1px hsl(45 100% 50% / 0.05),
-      0 10px 40px -10px hsl(220 20% 0% / 0.5),
-      inset 0 1px 0 hsl(45 20% 95% / 0.05);
+      0 0 0 1px hsla(45, 100%, 50%, 0.05),
+      0 10px 40px -10px hsla(220, 20%, 0%, 0.5),
+      inset 0 1px 0 hsla(45, 20%, 95%, 0.05);
   }
 
   .scanline {
@@ -154,8 +154,8 @@
       0deg,
       transparent,
       transparent 2px,
-      hsl(220 20% 3% / 0.03) 2px,
-      hsl(220 20% 3% / 0.03) 4px
+      hsla(220, 20%, 3%, 0.03) 2px,
+      hsla(220, 20%, 3%, 0.03) 4px
     );
     pointer-events: none;
   }
@@ -197,10 +197,10 @@
 
 @keyframes pulse-gold {
   0%, 100% {
-    box-shadow: 0 0 0 0 hsl(45 100% 50% / 0.4);
+    box-shadow: 0 0 0 0 hsla(45, 100%, 50%, 0.4);
   }
   50% {
-    box-shadow: 0 0 20px 10px hsl(45 100% 50% / 0);
+    box-shadow: 0 0 20px 10px hsla(45, 100%, 50%, 0);
   }
 }
 
