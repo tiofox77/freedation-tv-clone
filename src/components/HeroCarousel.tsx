@@ -1,12 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-import video1 from "@/assets/video-1.mp4";
-import video2 from "@/assets/video-2.mp4";
-import video3 from "@/assets/video-3.mp4";
-import video4 from "@/assets/video-4.mp4";
-import video5 from "@/assets/video-5.mp4";
+import { videos } from "@/data/videos";
 
 interface Slide {
   id: number;
@@ -17,11 +12,11 @@ interface Slide {
 }
 
 const slides: Slide[] = [
-  { id: 1, video: video1, category: "Demo Reel", title: "1-Demo Reel", slug: "demo-reel" },
-  { id: 2, video: video2, category: "Institucional", title: "2-Corporativos", slug: "corporativos" },
-  { id: 3, video: video3, category: "Publicidade", title: "3-Publicidade", slug: "publicidade" },
-  { id: 4, video: video4, category: "Demo Reel, Video Clips", title: "4-Video Clips", slug: "video-clips" },
-  { id: 5, video: video5, category: "Making Off", title: "5-Making Off", slug: "making-off" },
+  { id: 1, video: videos.elephantBet, category: "Demo Reel", title: "1-Demo Reel", slug: "demo-reel" },
+  { id: 2, video: videos.baiDirecto, category: "Institucional", title: "2-Corporativos", slug: "corporativos" },
+  { id: 3, video: videos.bdaWhatsapp, category: "Publicidade", title: "3-Publicidade", slug: "publicidade" },
+  { id: 4, video: videos.yolaSemedo, category: "Demo Reel, Video Clips", title: "4-Video Clips", slug: "video-clips" },
+  { id: 5, video: videos.makingOffElephant, category: "Making Off", title: "5-Making Off", slug: "making-off" },
 ];
 
 const HeroCarousel = () => {
@@ -127,7 +122,8 @@ const HeroCarousel = () => {
                   loop
                   muted
                   playsInline
-                  preload="auto"
+                  preload="metadata"
+                  crossOrigin="anonymous"
                 />
                 <div className="absolute inset-0 gradient-overlay" />
                 
