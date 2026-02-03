@@ -55,6 +55,7 @@ export default {
         "gold-glow": "hsl(var(--gold-glow))",
         "gold-dark": "hsl(var(--gold-dark))",
         "cyan-accent": "hsl(var(--cyan-accent))",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
