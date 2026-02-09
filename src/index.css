@@ -141,6 +141,19 @@
     box-shadow: 0 0 20px hsla(45, 100%, 50%, 0.15), inset 0 1px 0 hsla(45, 100%, 50%, 0.1);
   }
 
+  .hero-slide-active {
+    @apply rounded-sm;
+    box-shadow: 
+      0 0 40px hsla(45, 100%, 50%, 0.12),
+      0 0 80px hsla(45, 100%, 50%, 0.06),
+      inset 0 1px 0 hsla(45, 100%, 50%, 0.1);
+  }
+
+  .hero-slide-inactive {
+    @apply rounded-sm;
+    box-shadow: 0 10px 40px -10px hsla(220, 20%, 0%, 0.8);
+  }
+
   .futuristic-card {
     @apply bg-card/80 backdrop-blur-xl border border-border/50 rounded-sm;
     box-shadow: 

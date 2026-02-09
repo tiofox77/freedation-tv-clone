@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { videos } from "@/data/videos";
 
 interface Slide {
@@ -33,13 +34,11 @@ const HeroCarousel = () => {
   }, [isTransitioning]);
 
   const nextSlide = useCallback(() => {
-    const next = (currentSlide + 1) % slides.length;
-    goToSlide(next);
+    goToSlide((currentSlide + 1) % slides.length);
   }, [currentSlide, goToSlide]);
 
   const prevSlide = useCallback(() => {
-    const prev = (currentSlide - 1 + slides.length) % slides.length;
-    goToSlide(prev);
+    goToSlide((currentSlide - 1 + slides.length) % slides.length);
   }, [currentSlide, goToSlide]);
 
   useEffect(() => {
@@ -77,13 +76,25 @@ const HeroCarousel = () => {
     <section className="relative w-full h-screen overflow-hidden gradient-cinematic">
       {/* Ambient glow effects */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-cyan-accent/5 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/4 left-1/6 w-[500px] h-[500px] bg-primary/8 rounded-full blur-[150px] animate-pulse" />
+        <div className="absolute bottom-1/3 right-1/5 w-[400px] h-[400px] bg-cyan-accent/6 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/3 rounded-full blur-[200px]" />
       </div>
+
+      {/* Grid overlay */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
+        backgroundImage: 'linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)',
+        backgroundSize: '80px 80px'
+      }} />
 
       {/* Scanline overlay */}
       <div className="absolute inset-0 scanline z-[5]" />
 
+      {/* Horizontal cinematic bars */}
+      <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-background to-transparent z-[6]" />
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-[6]" />
+
+      {/* Carousel slides */}
       <div className="absolute inset-0 flex items-center justify-center">
         {slides.map((slide, index) => {
           const position = getSlidePosition(index);
@@ -91,34 +102,38 @@ const HeroCarousel = () => {
           return (
             <div
               key={slide.id}
-              className={`absolute transition-all duration-700 ease-out cursor-pointer ${
+              className={`absolute transition-all duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)] cursor-pointer ${
                 position === "center"
-                  ? "z-30 w-[65%] h-[75%] opacity-100"
+                  ? "z-30 w-[65%] h-[72%] opacity-100"
                   : position === "left"
-                  ? "z-20 w-[25%] h-[60%] -translate-x-[140%] opacity-50"
+                  ? "z-20 w-[22%] h-[55%] -translate-x-[145%] opacity-40 hover:opacity-60"
                   : position === "right"
-                  ? "z-20 w-[25%] h-[60%] translate-x-[140%] opacity-50"
+                  ? "z-20 w-[22%] h-[55%] translate-x-[145%] opacity-40 hover:opacity-60"
                   : position === "far-left"
-                  ? "z-10 w-[20%] h-[50%] -translate-x-[280%] opacity-20"
-                  : "z-10 w-[20%] h-[50%] translate-x-[280%] opacity-20"
+                  ? "z-10 w-[18%] h-[45%] -translate-x-[290%] opacity-15"
+                  : "z-10 w-[18%] h-[45%] translate-x-[290%] opacity-15"
               }`}
               onClick={() => position === "center" ? handleExplore(slide.slug) : goToSlide(index)}
             >
-              <div className={`relative w-full h-full overflow-hidden rounded-sm group ${
-                position === "center" ? "glow-border" : ""
+              <div className={`relative w-full h-full overflow-hidden group ${
+                position === "center" ? "hero-slide-active" : "hero-slide-inactive"
               }`}>
-                {/* Frame border for center */}
+                {/* Glowing frame for active slide */}
                 {position === "center" && (
                   <>
-                    <div className="absolute inset-0 border border-primary/20 rounded-sm z-10 pointer-events-none" />
-                    <div className="absolute -inset-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm z-0" />
+                    <div className="absolute -inset-[2px] bg-gradient-to-r from-primary/0 via-primary/40 to-primary/0 rounded-sm z-10 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
+                    <div className="absolute -inset-[1px] bg-gradient-to-b from-cyan-accent/10 via-transparent to-primary/20 rounded-sm z-10 pointer-events-none" />
                   </>
                 )}
 
                 <video
                   ref={(el) => (videoRefs.current[index] = el)}
                   src={slide.video}
-                  className="w-full h-full object-cover grayscale contrast-125 brightness-90 transition-all duration-500 group-hover:scale-105 group-hover:brightness-100"
+                  className={`w-full h-full object-cover transition-all duration-700 ${
+                    position === "center" 
+                      ? "grayscale-[0.7] contrast-125 brightness-[0.85] group-hover:grayscale-[0.3] group-hover:brightness-100" 
+                      : "grayscale contrast-110 brightness-75"
+                  }`}
                   loop
                   muted
                   playsInline
@@ -127,15 +142,36 @@ const HeroCarousel = () => {
                 />
                 <div className="absolute inset-0 gradient-overlay" />
                 
-                {/* Hover overlay for center slide */}
+                {/* HUD-style corner markers for center */}
                 {position === "center" && (
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 bg-background/40 backdrop-blur-sm">
-                    <div className="relative">
-                      <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full scale-150" />
-                      <span className="relative px-8 py-4 border border-primary/50 text-foreground font-medium uppercase tracking-[0.3em] text-sm hover:bg-primary hover:text-background hover:border-primary transition-all duration-300 backdrop-blur-sm">
+                  <>
+                    <div className="absolute top-3 left-3 w-8 h-8 border-t-2 border-l-2 border-primary/50 z-20 transition-all duration-500 group-hover:border-primary group-hover:w-10 group-hover:h-10" />
+                    <div className="absolute top-3 right-3 w-8 h-8 border-t-2 border-r-2 border-primary/50 z-20 transition-all duration-500 group-hover:border-primary group-hover:w-10 group-hover:h-10" />
+                    <div className="absolute bottom-3 left-3 w-8 h-8 border-b-2 border-l-2 border-primary/50 z-20 transition-all duration-500 group-hover:border-primary group-hover:w-10 group-hover:h-10" />
+                    <div className="absolute bottom-3 right-3 w-8 h-8 border-b-2 border-r-2 border-primary/50 z-20 transition-all duration-500 group-hover:border-primary group-hover:w-10 group-hover:h-10" />
+                  </>
+                )}
+                
+                {/* Center slide hover CTA */}
+                {position === "center" && (
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 bg-background/30 backdrop-blur-[2px] z-20">
+                    <motion.div
+                      initial={{ scale: 0.9, opacity: 0 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
+                      className="relative"
+                    >
+                      <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full scale-[2]" />
+                      <span className="relative px-10 py-4 border border-primary/60 text-foreground font-medium uppercase tracking-[0.35em] text-sm hover:bg-primary hover:text-background hover:border-primary transition-all duration-300 backdrop-blur-md bg-background/20">
                         Ver Projetos
                       </span>
-                    </div>
+                    </motion.div>
+                  </div>
+                )}
+
+                {/* Category label on side slides */}
+                {position !== "center" && (
+                  <div className="absolute bottom-4 left-4 right-4 z-20">
+                    <p className="text-xs text-primary/70 uppercase tracking-[0.15em] font-mono truncate">{slide.category}</p>
                   </div>
                 )}
               </div>
@@ -144,7 +180,7 @@ const HeroCarousel = () => {
         })}
       </div>
 
-      {/* Navigation arrows */}
+      {/* Navigation arrows with enhanced style */}
       <button
         onClick={prevSlide}
         className="carousel-nav-button absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-40"
@@ -161,65 +197,62 @@ const HeroCarousel = () => {
         <ChevronRight className="w-5 h-5" />
       </button>
 
-      {/* Bottom category navigation */}
-      <div className="absolute bottom-20 left-0 right-0 z-40">
-        <div className="flex items-end justify-center gap-6 lg:gap-12 px-4 overflow-x-auto">
+      {/* Bottom category navigation - refined */}
+      <div className="absolute bottom-16 left-0 right-0 z-40">
+        <div className="flex items-end justify-center gap-6 lg:gap-10 px-4 overflow-x-auto">
           {slides.map((slide, index) => (
             <button
               key={slide.id}
               onClick={() => goToSlide(index)}
               className={`flex flex-col items-center transition-all duration-500 min-w-fit group ${
-                index === currentSlide
-                  ? "opacity-100"
-                  : "opacity-30 hover:opacity-60"
+                index === currentSlide ? "opacity-100" : "opacity-25 hover:opacity-50"
               }`}
             >
-              <span className={`text-xs uppercase tracking-[0.2em] mb-2 transition-colors ${
-                index === currentSlide ? "text-primary" : "text-muted-foreground group-hover:text-foreground/70"
+              <span className={`text-[10px] uppercase tracking-[0.25em] mb-1.5 font-mono transition-colors ${
+                index === currentSlide ? "text-primary" : "text-muted-foreground group-hover:text-foreground/60"
               }`}>
                 {slide.category}
               </span>
-              <span
-                className={`font-display text-2xl lg:text-4xl xl:text-5xl transition-all ${
-                  index === currentSlide 
-                    ? "text-foreground text-shadow-glow" 
-                    : "text-muted-foreground group-hover:text-foreground/70"
-                }`}
-              >
+              <span className={`font-display text-xl lg:text-3xl xl:text-4xl transition-all leading-none ${
+                index === currentSlide ? "text-foreground text-shadow-glow" : "text-muted-foreground group-hover:text-foreground/60"
+              }`}>
                 {slide.title}
               </span>
-              {index === currentSlide && (
-                <>
-                  <div className="w-12 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent mt-3" />
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleExplore(slide.slug);
-                    }}
-                    className="text-xs uppercase tracking-[0.2em] text-primary/70 mt-3 hover:text-primary cursor-pointer transition-colors"
-                  >
-                    Explore →
-                  </button>
-                </>
-              )}
+              <AnimatePresence>
+                {index === currentSlide && (
+                  <motion.div
+                    initial={{ width: 0, opacity: 0 }}
+                    animate={{ width: 48, opacity: 1 }}
+                    exit={{ width: 0, opacity: 0 }}
+                    className="h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mt-2"
+                  />
+                )}
+              </AnimatePresence>
             </button>
           ))}
         </div>
       </div>
 
-      {/* Progress indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40 flex gap-2">
+      {/* Progress bar */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 flex gap-1.5">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`h-[2px] transition-all duration-500 ${
+            className={`h-[1px] transition-all duration-700 ${
               index === currentSlide 
-                ? "w-8 bg-primary" 
-                : "w-4 bg-foreground/20 hover:bg-foreground/40"
+                ? "w-10 bg-primary shadow-[0_0_8px_hsl(var(--primary)/0.5)]" 
+                : "w-3 bg-foreground/15 hover:bg-foreground/30"
             }`}
           />
         ))}
+      </div>
+
+      {/* Slide counter - HUD style */}
+      <div className="absolute top-1/2 -translate-y-1/2 right-6 lg:right-10 z-30 flex flex-col items-center gap-2">
+        <span className="text-primary font-mono text-sm font-bold">{String(currentSlide + 1).padStart(2, '0')}</span>
+        <div className="w-[1px] h-8 bg-gradient-to-b from-primary/50 to-transparent" />
+        <span className="text-muted-foreground font-mono text-xs">{String(slides.length).padStart(2, '0')}</span>
       </div>
     </section>
   );
