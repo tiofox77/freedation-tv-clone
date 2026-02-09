@@ -1,14 +1,30 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import Logo from "./Logo";
+
+const menuItems = [
+  { label: "Home", path: "/" },
+  { label: "Sobre", path: "/sobre" },
+  { label: "Portfólio", path: "/" },
+  { label: "Contato", path: "/" },
+];
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleNav = (path: string) => {
+    setIsMenuOpen(false);
+    navigate(path);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-6 py-4 lg:px-12">
       <div className="flex items-center justify-between">
-        <Logo />
+        <div className="cursor-pointer" onClick={() => navigate("/")}>
+          <Logo />
+        </div>
         
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -33,16 +49,15 @@ const Header = () => {
         }`}
       >
         <nav className="flex flex-col items-center justify-center h-full gap-8">
-          {["Home", "Portfólio", "Sobre", "Serviços", "Contato"].map((item, index) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
+          {menuItems.map((item, index) => (
+            <button
+              key={item.label}
               className="font-display text-5xl lg:text-7xl text-foreground/80 hover:text-primary transition-colors duration-300"
               style={{ animationDelay: `${index * 100}ms` }}
-              onClick={() => setIsMenuOpen(false)}
+              onClick={() => handleNav(item.path)}
             >
-              {item}
-            </a>
+              {item.label}
+            </button>
           ))}
         </nav>
       </div>
