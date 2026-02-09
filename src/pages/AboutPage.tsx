@@ -3,8 +3,9 @@ import Footer from "@/components/Footer";
 import AboutHero from "@/components/about/AboutHero";
 import AboutStory from "@/components/about/AboutStory";
 import AboutStats from "@/components/about/AboutStats";
-import AboutServices from "@/components/about/AboutServices";
+import AboutGallery from "@/components/about/AboutGallery";
 import AboutTeam from "@/components/about/AboutTeam";
+import AboutColorGrading from "@/components/about/AboutColorGrading";
 import AboutCTA from "@/components/about/AboutCTA";
 
 const AboutPage = () => {
@@ -14,10 +15,11 @@ const AboutPage = () => {
       <AboutHero />
       <AboutStory />
       <AboutStats />
-      <AboutServices />
+      <AboutGallery />
       <AboutTeam />
+      <AboutColorGrading />
       <AboutCTA />
-      <Footer />
+      <div className="h-16" />
     </div>
   );
 };
