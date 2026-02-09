@@ -1,86 +1,74 @@
 import { motion } from "framer-motion";
-import aboutHero from "@/assets/about-hero.jpg";
+import VideoPlayer from "@/components/VideoPlayer";
+
+const DEMO_REEL_URL = "https://freedation.com/wp-content/uploads/2023/07/Free-Dation-Demo-Reel-2023-Site-1.mp4";
 
 const AboutHero = () => {
   return (
-    <section className="relative h-screen w-full overflow-hidden">
-      {/* Background image */}
-      <div className="absolute inset-0">
-        <img
-          src={aboutHero}
-          alt="Freedation production studio"
-          className="w-full h-full object-cover grayscale-[0.6] contrast-125 brightness-[0.4]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/30 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-transparent" />
+    <section className="relative w-full overflow-hidden pt-24 pb-16">
+      {/* Background effects */}
+      <div className="absolute inset-0 gradient-cinematic" />
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/6 w-[500px] h-[500px] bg-primary/6 rounded-full blur-[180px] animate-pulse" />
       </div>
-
-      {/* Grid overlay */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
-        backgroundImage: 'linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)',
-        backgroundSize: '80px 80px'
-      }} />
-
-      {/* Scanline */}
       <div className="absolute inset-0 scanline" />
 
-      {/* Content */}
-      <div className="relative z-10 h-full flex flex-col justify-end pb-32 px-8 lg:px-20">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.05 }}
-          transition={{ duration: 1 }}
-          className="absolute left-8 lg:left-20 bottom-20 font-display text-[200px] lg:text-[300px] text-foreground leading-none select-none pointer-events-none"
-        >
-          FD
-        </motion.div>
-
+      <div className="relative z-10 max-w-7xl mx-auto px-8 lg:px-20">
+        {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
           className="flex items-center gap-4 mb-4"
         >
           <div className="w-12 h-[1px] bg-primary" />
           <span className="text-[11px] text-primary font-mono uppercase tracking-[0.4em]">
-            Sobre Nós
+            Quem Somos
           </span>
         </motion.div>
 
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 0.6 }}
-          className="font-display text-5xl lg:text-8xl xl:text-9xl text-foreground leading-[0.9] max-w-4xl text-shadow-glow"
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="font-display text-6xl lg:text-9xl text-foreground leading-[0.9] mb-2 text-shadow-glow"
         >
-          Criamos
-          <br />
-          <span className="text-primary">Visões</span> que
-          <br />
-          Inspiram
+          FREE <span className="text-primary">DATION</span>
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-          className="text-foreground/50 text-base lg:text-lg max-w-lg mt-6 leading-relaxed"
+          transition={{ delay: 0.35, duration: 0.5 }}
+          className="text-muted-foreground text-lg uppercase tracking-[0.3em] font-mono mb-12"
         >
-          Uma produtora audiovisual que transforma ideias em experiências
-          cinematográficas únicas e memoráveis.
+          Produtora Audiovisual
         </motion.p>
-      </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 0.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
-      >
-        <span className="text-[9px] text-muted-foreground font-mono uppercase tracking-[0.3em]">Scroll</span>
-        <div className="w-[1px] h-8 bg-gradient-to-b from-primary/50 to-transparent animate-pulse" />
-      </motion.div>
+        {/* Demo Reel Video */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.45, duration: 0.6 }}
+          className="relative"
+        >
+          <div className="relative rounded-sm overflow-hidden hero-slide-active">
+            {/* HUD corners */}
+            <div className="absolute top-3 left-3 w-6 h-6 border-t border-l border-primary/40 z-20" />
+            <div className="absolute top-3 right-3 w-6 h-6 border-t border-r border-primary/40 z-20" />
+            <div className="absolute bottom-3 left-3 w-6 h-6 border-b border-l border-primary/40 z-20" />
+            <div className="absolute bottom-3 right-3 w-6 h-6 border-b border-r border-primary/40 z-20" />
+
+            <video
+              src={DEMO_REEL_URL}
+              controls
+              preload="metadata"
+              className="w-full aspect-video object-cover"
+              controlsList="nodownload"
+            />
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 };
