@@ -5,8 +5,8 @@ import Logo from "./Logo";
 
 const menuItems = [
   { label: "Home", path: "/" },
-  { label: "Sobre", path: "/sobre" },
-  { label: "Portfólio", path: "/" },
+  { label: "Quem Somos", path: "/sobre" },
+  { label: "Clientes", path: "/clientes" },
   { label: "Contato", path: "/" },
 ];
 
